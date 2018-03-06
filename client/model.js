@@ -63,11 +63,13 @@ var Model = function () {
                     if (newX > paddle.x - radius && newX < paddle.x + paddleWidth + radius) {
                         if (newY > paddle.y - radius)
                             if (newY < paddle.y + paddleHeight + radius) {
+                            if(paddle.id === 0) {
                                 ball.y = paddle.y - radius;
+                            }else{
+                                ball.y = paddle.y + paddle.height +  radius;
+                            }
                                 ball.yVelo = -ball.yVelo;
                                 ySet = true;
-                            } else {
-
                             }
                     }
                 }
@@ -100,11 +102,6 @@ var Model = function () {
         paddleWidth = boardWidth / 6;
         paddleHeight = 50;
 
-
-        // balls = [{x: boardWidth * 0.5, y: boardHeight * 0.75, radius: boxWidth / 5, fillColor: "green", xVelo: 2, yVelo: 2}];
-        balls.push(new Ball(boardWidth * 0.5, boardHeight * 0.75, boxWidth / 5, "green", 2, 2));
-        balls.push(new Ball(boardWidth * 0.5, boardHeight * 0.25, boxWidth / 5, "green", 2, 2));
-
         var boxColor = ["red", "blue", "green", "yellow"];
 
         for (var i = 0; i < 13; i++) {
@@ -123,7 +120,6 @@ var Model = function () {
 
     };
     this.getPlayer = function (id) {
-        console.log("here1 ", players, id);
         for (var key in players) {
             if (players[key].id == id) {
                 return players[id];
@@ -132,14 +128,19 @@ var Model = function () {
     };
     this.addPlayer = function (id) {
         players.push(new Player(id));
+        if (balls.length === 0) {
+            balls.push(new Ball(boardWidth * 0.75, boardHeight * 0.75, boxWidth / 5, "green", 2, 2));
+        } else {
+            balls.push(new Ball(boardWidth * 0.25, boardHeight * 0.25, boxWidth / 5, "green", 2, 2));
+        }
     };
     var Player = function (id) {
         var paddle;
         if (id === 0) {
-            paddle = new Paddle(boardWidth * 0.6, boardHeight - paddleHeight, paddleWidth, paddleHeight, "blue");
+            paddle = new Paddle(id,boardWidth * 0.6, boardHeight - paddleHeight, paddleWidth, paddleHeight, "blue");
         }
         if (id === 1) {
-            paddle = new Paddle(boardWidth * 0.6, paddleHeight, paddleWidth, paddleHeight, "orange");
+            paddle = new Paddle(id,boardWidth * 0.6, 0, paddleWidth, paddleHeight, "orange");
         }
         this.id = id;
         this.gamma = 0;
@@ -150,7 +151,8 @@ var Model = function () {
 
     };
 
-    var Paddle = function (x, y, width, height, color) {
+    var Paddle = function (id, x, y, width, height, color) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;

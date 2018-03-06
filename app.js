@@ -51,7 +51,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('gamma', function (data) {
        // console.log(socket.id, " socket.id");
         if (model.getPlayer(socket.id)) {
-            console.log("here");
             model.getPlayer(socket.id).gamma = data.gamma;
         }
     });
