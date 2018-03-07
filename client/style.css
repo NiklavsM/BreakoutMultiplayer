@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .modeButton {
     font-size: 6rem;
     border: solid 1rem black;
@@ -15,3 +20,15 @@ h3{
     font-size: 8rem;
     text-align: center;
 }
+
+#gameArea {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+/*#canvas{*/
+    /*border: solid black 0.1rem;*/
+
+/*}*/

@@ -5,20 +5,22 @@ function Controller() {
     var oldGamma;
 
     this.init = function () {
-        view.init();
-        model.init(view.getCanvasWidth(), view.getCanvasHeight());
+        model.init();
+        view.init(model.getWidth());
+
         model.addPlayer(0);
         setInterval(function () {
+            model.getPlayer(0).gamma = gamma;
             model.updateGizmos();
             view.canvasPaint(model.getBalls(), model.getPaddles(), model.getBoxes());
-        }, 2);
+        }, 10);
         setInterval(function () {
-            model.getPlayer(0).gamma = gamma;
+
         }, 10);
         window.addEventListener("deviceorientation", function (event) {
-            document.getElementById("alpha").innerHTML = "<p>alpha: " + event.alpha + "</p>";
-            document.getElementById("beta").innerHTML = "<p>beta: " + event.beta + "</p>";
-            document.getElementById("gamma").innerHTML = "<p>gamma: " + gamma + "</p>";
+            // document.getElementById("alpha").innerHTML = "<p>alpha: " + event.alpha + "</p>";
+            // document.getElementById("beta").innerHTML = "<p>beta: " + event.beta + "</p>";
+            // document.getElementById("gamma").innerHTML = "<p>gamma: " + gamma + "</p>";
             gamma = event.gamma;
         });
 

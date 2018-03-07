@@ -1,7 +1,7 @@
 var Model = function () {
-    const margin = 10, boxesInRow = 13;
+    const boxesInRow = 13, boardWidth = 500, boardHeight = 1000, boxMarigin = 8;
 
-    var boxWidth, paddleWidth, paddleHeight, boardWidth, boardHeight;
+    var boxWidth, paddleWidth, paddleHeight;
     var balls = [],
         players = [],
         boxes = [],
@@ -63,11 +63,11 @@ var Model = function () {
                     if (newX > paddle.x - radius && newX < paddle.x + paddleWidth + radius) {
                         if (newY > paddle.y - radius)
                             if (newY < paddle.y + paddleHeight + radius) {
-                            if(paddle.id === 0) {
-                                ball.y = paddle.y - radius;
-                            }else{
-                                ball.y = paddle.y + paddle.height +  radius;
-                            }
+                                if (paddle.id === 0) {
+                                    ball.y = paddle.y - radius;
+                                } else {
+                                    ball.y = paddle.y + paddle.height + radius;
+                                }
                                 ball.yVelo = -ball.yVelo;
                                 ySet = true;
                             }
@@ -95,20 +95,22 @@ var Model = function () {
         }
         return paddles;
     };
-    this.init = function (width, height) {
-        boardWidth = width;
-        boardHeight = height;
-        boxWidth = (boardWidth - boxesInRow * margin - margin) / boxesInRow;
+    this.getWidth = function () {
+        return boardWidth;
+    };
+    this.init = function () {
+
+        boxWidth = (boardWidth - (boxesInRow * boxMarigin) - boxMarigin) / boxesInRow;
         paddleWidth = boardWidth / 6;
-        paddleHeight = 50;
+        paddleHeight = boardHeight / 100;
 
         var boxColor = ["red", "blue", "green", "yellow"];
 
-        for (var i = 0; i < 13; i++) {
+        for (var i = 0; i < boxesInRow; i++) {
             for (var k = 0; k < 4; k++) {
                 boxes.push({
-                    x: i * (boxWidth) + (i + 1) * 10,
-                    y: boardHeight / 2 + k * (boxWidth) + k * 10,
+                    x: i * (boxWidth) + (i + 1) * boxMarigin,
+                    y: boardHeight * 0.40 + k * (boxWidth) + k * 10,
                     width: boxWidth,
                     height: boxWidth,
                     fillColor: boxColor[k],
@@ -137,10 +139,10 @@ var Model = function () {
     var Player = function (id) {
         var paddle;
         if (id === 0) {
-            paddle = new Paddle(id,boardWidth * 0.6, boardHeight - paddleHeight, paddleWidth, paddleHeight, "blue");
+            paddle = new Paddle(id, boardWidth * 0.6, boardHeight - paddleHeight, paddleWidth, paddleHeight, "blue");
         }
         if (id === 1) {
-            paddle = new Paddle(id,boardWidth * 0.6, 0, paddleWidth, paddleHeight, "orange");
+            paddle = new Paddle(id, boardWidth * 0.6, 0, paddleWidth, paddleHeight, "orange");
         }
         this.id = id;
         this.gamma = 0;
