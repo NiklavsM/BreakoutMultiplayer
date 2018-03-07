@@ -72,12 +72,6 @@ function View() {
         //   modelHeightToCanvasHeight = modelHeight / parseInt(canvas.style.height);
         MVRatio = parseFloat(canvas.width) / modelWidth;
         console.log(MVRatio, " MVRatio");
-
-        // console.log(modelHeightToCanvasHeight, " modelHeightToCanvasHeight");
-
-        // canvas.width = document.documentElement.clientWidth - (document.documentElement.clientWidth * 0.02);
-        // canvas.height = document.documentElement.clientHeight - (document.documentElement.clientHeight * 0.1);
-        //   canvas.setAttribute('height' , (screen.availHeight-100).toString());
     };
 
 

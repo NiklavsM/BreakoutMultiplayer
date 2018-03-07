@@ -139,10 +139,10 @@ var Model = function () {
     var Player = function (id) {
         var paddle;
         if (id === 0) {
-            paddle = new Paddle(id, boardWidth * 0.6, boardHeight - paddleHeight, paddleWidth, paddleHeight, "blue");
+            paddle = new Paddle(id, boardWidth * 0.6, boardHeight - paddleHeight*2, paddleWidth, paddleHeight, "blue");
         }
         if (id === 1) {
-            paddle = new Paddle(id, boardWidth * 0.6, 0, paddleWidth, paddleHeight, "orange");
+            paddle = new Paddle(id, boardWidth * 0.6, paddleHeight, paddleWidth, paddleHeight, "orange");
         }
         this.id = id;
         this.gamma = 0;

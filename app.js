@@ -16,10 +16,6 @@ var playerId;
 var model;
 var io = require('socket.io')(serv, {});
 
-var newGame = function (width, height) {
-    model.init(width, height);
-};
-
 var reset = function () {
     model = new modelE();
     playerId = 0;
@@ -27,37 +23,39 @@ var reset = function () {
 };
 reset();
 io.sockets.on('connection', function (socket) {
-    if (playerId === 0) {
-        console.log('socket connection');
-        socket.id = playerId;
-        socketList[playerId] = socket;
+    console.log('socket connection', playerId);
+    socket.on("clientready", function (data) {
+        console.log("ready");
+
         if (playerId === 0) {
-            socket.on('host', function (data) {
-                newGame(data.width, data.height);
-                model.addPlayer(playerId);
-                playerId++;
-            })
-        }
-    } else if (playerId === 1) {
-        socket.id = playerId;
-        socketList[playerId] = socket;
-        model.addPlayer(playerId);
-        playerId++;
-    } else {
-        console.log("Server is full");
-        return;
-    }
 
-    socket.on('gamma', function (data) {
-       // console.log(socket.id, " socket.id");
-        if (model.getPlayer(socket.id)) {
-            model.getPlayer(socket.id).gamma = data.gamma;
-        }
-    });
+            socket.id = playerId;
+            socketList[playerId] = socket;
+            model.init();
+            model.addPlayer(playerId);
+            playerId++;
 
-    socket.on("disconnect", function () {
-        console.log("disoxnected ", socket.id);
-        reset();
+        } else if (playerId === 1) {
+            socket.id = playerId;
+            socketList[playerId] = socket;
+            model.addPlayer(playerId);
+            playerId++;
+
+        } else {
+            console.log("Server is full");
+            return;
+        }
+        socket.emit('setup', {width: model.getWidth()});
+        socket.on('gamma', function (data) {
+            // console.log(socket.id, " socket.id");
+            if (model.getPlayer(socket.id)) {
+                model.getPlayer(socket.id).gamma = data.gamma;
+            }
+        });
+        socket.on("disconnect", function () {
+            console.log("disconnected ", socket.id);
+            reset();
+        });
     });
 });
 
