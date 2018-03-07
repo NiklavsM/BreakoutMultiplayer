@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client/index.html');
 });
 app.use('/client', express.static(__dirname + '/client'));
-
+//test
 serv.listen(8080);
 console.log("Server started");
 
