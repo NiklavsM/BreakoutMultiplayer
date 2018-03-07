@@ -6,14 +6,19 @@ function Controller() {
 
     this.init = function () {
 
-        socket.on('setup',function(data){
+        socket.on('setup',function(data,callback){
             console.log("hereeee");
             view.init(data.width);
+            view.waitingScreen(true);
+            console.log(callback , "data");
+            callback();
         });
         socket.on('setBoard', function (data) {
             view.canvasPaint(data.balls,data.paddles,data.boxes);
         });
-
+        socket.on('gameStarted',function(){
+           view.waitingScreen(false);
+        });
         setInterval(function(){
             socket.emit("gamma",{gamma: gamma})
         },10);

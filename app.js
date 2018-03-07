@@ -21,6 +21,14 @@ var reset = function () {
     playerId = 0;
     socketList = [];
 };
+
+var gameStartedNotify = function () {
+    if (playerId === 2) {
+        for (var i in socketList) {
+            socketList[i].emit('gameStarted');
+        }
+    }
+};
 reset();
 io.sockets.on('connection', function (socket) {
     console.log('socket connection', playerId);
@@ -45,26 +53,31 @@ io.sockets.on('connection', function (socket) {
             console.log("Server is full");
             return;
         }
-        socket.emit('setup', {width: model.getWidth()});
+        socket.emit('setup', {width: model.getWidth()}, gameStartedNotify);
         socket.on('gamma', function (data) {
             // console.log(socket.id, " socket.id");
             if (model.getPlayer(socket.id)) {
                 model.getPlayer(socket.id).gamma = data.gamma;
             }
         });
-        socket.on("disconnect", function () {
-            console.log("disconnected ", socket.id);
-            reset();
-        });
+    });
+    socket.on("disconnect", function () {
+        console.log("disconnected ", socket.id);
+        reset();
     });
 });
+
 
 setInterval(function () {
     if (socketList.length === 2) {
         model.updateGizmos();
         for (var i in socketList) {
             var socket = socketList[i];
-            socket.emit('setBoard', {balls: model.getBalls(), paddles: model.getPaddles(), boxes: model.getBoxes()});
+            socket.emit('setBoard', {
+                balls: model.getBalls(),
+                paddles: model.getPaddles(),
+                boxes: model.getBoxes()
+            });
         }
     }
 

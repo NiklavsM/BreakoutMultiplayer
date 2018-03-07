@@ -1,8 +1,9 @@
 function View() {
     var modelWidthToCanvasWidth, MVRatio;
-    var canvas, canvasPaddle, widthToHeight, gameArea,
+    var canvas , canvasPaddle, widthToHeight, gameArea,
+        waitingScreen,
         drawCircle = function (context, x, y, r, fill) {
-          //  console.log(x, y, r);
+            //  console.log(x, y, r);
             context.beginPath();
             context.arc(x * MVRatio, y * MVRatio, r * MVRatio, 0, 360);
             context.fillStyle = fill;
@@ -45,14 +46,23 @@ function View() {
     this.getCanvasHeight = function () {
         return canvas.height;
     };
+    this.waitingScreen = function(on){
+        if(on) {
+            waitingScreen.style.display = "block";
+        }else{
+            waitingScreen.style.display = "none";
+        }
+    };
     this.init = function (modelWidth) {
-        canvas = document.getElementById("canvas");
+         canvas = document.getElementById("canvas");
+        waitingScreen = document.getElementById("waitingScreen");
+
         // gameArea = document.getElementById("gameArea");
         widthToHeight = 1 / 2;
         // var newWidth = document.documentElement.clientWidth;
         // var newHeight = document.documentElement.clientHeight;
-        var newWidth = document.documentElement.clientWidth-10;
-        var newHeight = document.documentElement.clientHeight-10;
+        var newWidth = document.documentElement.clientWidth - 10;
+        var newHeight = document.documentElement.clientHeight - 10;
         var newWidthToHeight = newWidth / newHeight;
         if (newWidthToHeight > widthToHeight) {
             newWidth = newHeight * widthToHeight;
@@ -65,7 +75,7 @@ function View() {
         // gameArea.style.marginLeft = (-newWidth / 2) + 'px';
         canvas.width = newWidth;
         canvas.height = newHeight;
-        canvas.style = "position:absolute; left: 50%; width: "+ newWidth +"px; margin-left: -"+newWidth/2+"px;";
+        canvas.style = "position:absolute; left: 50%; width: " + newWidth + "px; margin-left: -" + newWidth / 2 + "px;";
         canvas.style.border = "solid black 0.1rem";
 
         console.log("newWidth " + newWidth + " newHeight" + newHeight);

@@ -131,9 +131,9 @@ var Model = function () {
     this.addPlayer = function (id) {
         players.push(new Player(id));
         if (balls.length === 0) {
-            balls.push(new Ball(boardWidth * 0.75, boardHeight * 0.75, boxWidth / 5, "green", 2, 2));
+            balls.push(new Ball(boardWidth * 0.75, boardHeight * 0.75, boxWidth / 5, "green", 1, 1));
         } else {
-            balls.push(new Ball(boardWidth * 0.25, boardHeight * 0.25, boxWidth / 5, "green", 2, 2));
+            balls.push(new Ball(boardWidth * 0.25, boardHeight * 0.25, boxWidth / 5, "green", 1, 1));
         }
     };
     var Player = function (id) {
