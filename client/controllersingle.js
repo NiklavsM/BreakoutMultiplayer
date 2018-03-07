@@ -19,6 +19,8 @@ function Controller() {
         window.addEventListener("deviceorientation", function (event) {
             gamma = event.gamma;
         });
+        window.addEventListener('resize', view.resizeGame, false);
+        window.addEventListener('orientationchange', view.resizeGame, false);
 
 
     };

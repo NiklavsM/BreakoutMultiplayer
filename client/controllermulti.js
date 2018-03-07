@@ -9,6 +9,8 @@ function Controller() {
         socket.on('setup',function(data,callback){
             view.init(data.width);
             view.popUpWindow(true,"Waiting for the second player");
+            window.addEventListener('resize', view.resizeGame);
+            window.addEventListener('orientationchange', view.resizeGame);
             callback();
         });
         socket.on('setBoard', function (data) {
@@ -26,6 +28,7 @@ function Controller() {
         window.addEventListener("deviceorientation", function (event) {
             gamma = event.gamma;
         });
+
 
     socket.emit("clientready", {});
     };

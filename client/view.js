@@ -1,7 +1,7 @@
 function View() {
-    var modelWidthToCanvasWidth, MVRatio;
+    var modelWidthToCanvasWidth, MVRatio, modelWidth;
     var canvas , canvasPaddle, widthToHeight = 1 / 2, gameArea,
-        waitingScreen,
+        popUpWindow,
         drawCircle = function (context, x, y, r, fill) {
             //  console.log(x, y, r);
             context.beginPath();
@@ -20,7 +20,25 @@ function View() {
             context.stroke();
             //console.log("what");
 
-        };
+        },
+    resizeScreen = function(){
+        console.log("hereeeee");
+        var newWidth = document.documentElement.clientWidth - 10;
+        var newHeight = document.documentElement.clientHeight - 20;
+        var newWidthToHeight = newWidth / newHeight;
+        if (newWidthToHeight > widthToHeight) {
+            newWidth = newHeight * widthToHeight;
+        } else {
+            newHeight = newWidth / widthToHeight;
+        }
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        canvas.style = "position:absolute; left: 50%; width: " + newWidth + "px; margin-left: -" + newWidth / 2 + "px;";
+        canvas.style.border = "solid black 0.1rem";
+
+        MVRatio = parseFloat(canvas.width) / modelWidth;
+        console.log(MVRatio, " MVRatio");
+    };
 
     this.canvasPaint = function (balls, paddles, boxes) {
         // console.log("here : ", balls, paddles, boxes);
@@ -54,25 +72,17 @@ function View() {
             popUpWindow.style.display = "none";
         }
     };
+    this.resizeGame = function(){
+        console.log("why");
+        resizeScreen();
+    };
 
-    this.init = function (modelWidth) {
-         canvas = document.getElementById("canvas");
+    this.init = function (modelWidthNew) {
+        canvas = document.getElementById("canvas");
         popUpWindow = document.getElementById("popUpWindow");
-        var newWidth = document.documentElement.clientWidth - 10;
-        var newHeight = document.documentElement.clientHeight - 10;
-        var newWidthToHeight = newWidth / newHeight;
-        if (newWidthToHeight > widthToHeight) {
-            newWidth = newHeight * widthToHeight;
-        } else {
-            newHeight = newWidth / widthToHeight;
-        }
-        canvas.width = newWidth;
-        canvas.height = newHeight;
-        canvas.style = "position:absolute; left: 50%; width: " + newWidth + "px; margin-left: -" + newWidth / 2 + "px;";
-        canvas.style.border = "solid black 0.1rem";
+        modelWidth = modelWidthNew;
+        resizeScreen();
 
-        MVRatio = parseFloat(canvas.width) / modelWidth;
-        console.log(MVRatio, " MVRatio");
     };
 
 
