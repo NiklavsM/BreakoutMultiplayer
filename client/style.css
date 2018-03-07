@@ -4,6 +4,7 @@
 }
 
 .modeButton {
+    width:90vw;
     font-size: 6rem;
     border: solid 1rem black;
     border-radius: 1rem;
