@@ -7,25 +7,23 @@ function Controller() {
     this.init = function () {
 
         socket.on('setup',function(data,callback){
-            console.log("hereeee");
             view.init(data.width);
-            view.waitingScreen(true);
-            console.log(callback , "data");
+            view.popUpWindow(true,"Waiting for the second player");
             callback();
         });
         socket.on('setBoard', function (data) {
             view.canvasPaint(data.balls,data.paddles,data.boxes);
         });
         socket.on('gameStarted',function(){
-           view.waitingScreen(false);
+           view.popUpWindow(false);
+        });
+        socket.on('victory',function(){
+            view.popUpWindow(true,"Congratulations! All boxes destroyed!")
         });
         setInterval(function(){
             socket.emit("gamma",{gamma: gamma})
         },10);
         window.addEventListener("deviceorientation", function (event) {
-            // document.getElementById("alpha").innerHTML = "<p>alpha: " + event.alpha + "</p>";
-            // document.getElementById("beta").innerHTML = "<p>beta: " + event.beta + "</p>";
-            // document.getElementById("gamma").innerHTML = "<p>gamma: " + gamma + "</p>";
             gamma = event.gamma;
         });
 

@@ -55,7 +55,6 @@ io.sockets.on('connection', function (socket) {
         }
         socket.emit('setup', {width: model.getWidth()}, gameStartedNotify);
         socket.on('gamma', function (data) {
-            // console.log(socket.id, " socket.id");
             if (model.getPlayer(socket.id)) {
                 model.getPlayer(socket.id).gamma = data.gamma;
             }
@@ -73,6 +72,7 @@ setInterval(function () {
         model.updateGizmos();
         for (var i in socketList) {
             var socket = socketList[i];
+            if(model.getBoxes().length===0) socket.emit('victory');
             socket.emit('setBoard', {
                 balls: model.getBalls(),
                 paddles: model.getPaddles(),
@@ -81,4 +81,4 @@ setInterval(function () {
         }
     }
 
-}, 2);
+}, 5);

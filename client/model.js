@@ -69,6 +69,7 @@ var Model = function () {
                                     ball.y = paddle.y + paddle.height + radius;
                                 }
                                 ball.yVelo = -ball.yVelo;
+                                ball.xVelo = Math.random() * (2) -2;
                                 ySet = true;
                             }
                     }
@@ -139,7 +140,7 @@ var Model = function () {
     var Player = function (id) {
         var paddle;
         if (id === 0) {
-            paddle = new Paddle(id, boardWidth * 0.6, boardHeight - paddleHeight*2, paddleWidth, paddleHeight, "blue");
+            paddle = new Paddle(id, boardWidth * 0.6, boardHeight - paddleHeight * 2, paddleWidth, paddleHeight, "blue");
         }
         if (id === 1) {
             paddle = new Paddle(id, boardWidth * 0.6, paddleHeight, paddleWidth, paddleHeight, "orange");

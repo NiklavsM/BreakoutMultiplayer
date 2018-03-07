@@ -12,15 +12,11 @@ function Controller() {
         setInterval(function () {
             model.getPlayer(0).gamma = gamma;
             model.updateGizmos();
+            if(model.getBoxes()===0)view.popUpWindow(true,"Congratulations! All boxes destroyed!");
             view.canvasPaint(model.getBalls(), model.getPaddles(), model.getBoxes());
-        }, 10);
-        setInterval(function () {
+        }, 5);
 
-        }, 10);
         window.addEventListener("deviceorientation", function (event) {
-            // document.getElementById("alpha").innerHTML = "<p>alpha: " + event.alpha + "</p>";
-            // document.getElementById("beta").innerHTML = "<p>beta: " + event.beta + "</p>";
-            // document.getElementById("gamma").innerHTML = "<p>gamma: " + gamma + "</p>";
             gamma = event.gamma;
         });
 
