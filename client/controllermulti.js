@@ -24,7 +24,7 @@ function Controller() {
         });
         setInterval(function(){
             socket.emit("gamma",{gamma: gamma})
-        },10);
+        },50);
         window.addEventListener("deviceorientation", function (event) {
             gamma = event.gamma;
         });

@@ -3,9 +3,6 @@ var app = express();
 var serv = require('http').Server(app);
 var modelE = require('./client/model.js');
 
-// app.get('/', function (req, res) {
-//     res.sendFile(__dirname + '/client/index.html');
-// });
 app.use('/client', express.static(__dirname + '/client'));
 //test
 serv.listen(8080);
